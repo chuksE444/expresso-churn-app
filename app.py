@@ -1,3 +1,17 @@
+import requests
+
+MODEL_URL = "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID"
+MODEL_PATH = "expresso_churn_model.pkl"
+
+# Download model if not already present
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model...")
+    response = requests.get(MODEL_URL)
+    with open(MODEL_PATH, "wb") as f:
+        f.write(response.content)
+    print("Model downloaded.")
+
+
 import streamlit as st
 import pandas as pd
 import joblib
@@ -48,3 +62,4 @@ else:
             st.error(f"The client is likely to churn (Probability: {proba:.2f})")
         else:
             st.success(f"The client is likely to stay (Probability: {proba:.2f})")
+
